@@ -95,7 +95,7 @@ const FormPay = () => {
     }
 
     const onSubmit = e => {
-        e.preventDefault()
+
         if (name.trim().length > 5) {
             const newFeedBack = {
                 amount: amount,
@@ -140,38 +140,58 @@ const FormPay = () => {
                                             value={name}
                                         />
                                     </Form.Group>
-                                    <div style={
-                                        'color: red'
-                                    }>
+                                    <div>
                                         {errors?.owner && <p>{errors?.owner?.message || "Error!"}</p>}
                                     </div>
                                 </Col>
                                 <Col lg={4}>
                                     <Form.Group className={'cvv'}>
                                         <Form.Label htmlFor="owner">CVV</Form.Label>
-                                        <Form.Control type="text"
+                                        <Form.Control type="number"
                                                       {...register('cvv', {
                                                           required: true,
+                                                          maxLength: {
+                                                              value: 4,
+                                                              message: 'Максимум 4 символов'
+                                                          },
+                                                          minLength: {
+                                                              value: 4,
+                                                              message: 'Четырех значный код'
+                                                          }
                                                       })}
                                                       placeholder={'Write a review'}
                                                       onChange={cardCvv}
                                                       value={cvv}/>
                                     </Form.Group>
+                                    <div>
+                                        {errors?.cvv && <p>{errors?.cvv?.message || "Error!"}</p>}
+                                    </div>
                                 </Col>
                                 <Form.Group id="card-number-field">
                                     <Form.Label htmlFor="cardNumber">Card Number</Form.Label>
-                                    <Form.Control type="text"
+                                    <Form.Control type="number"
                                                   {...register('cardNumber', {
                                                       required: true,
+                                                      maxLength: {
+                                                          value: 16,
+                                                          message: 'max 16-символов'
+                                                      },
+                                                      minLength: {
+                                                          value: 16,
+                                                          message: 'min 16-символов'
+                                                      }
                                                   })}
                                                   onChange={cardNum}
                                                   value={cardNumber}/>
                                 </Form.Group>
+                                <div>
+                                    {errors?.cardNumber && <p>{errors?.cardNumber?.message || "Error!"}</p>}
+                                </div>
                                 <Form.Group id="amount">
                                     <Form.Label htmlFor="cardNumber">Amount</Form.Label>
-                                    <Form.Control type="text"
+                                    <Form.Control type="number"
                                                   {...register('cardNumberAmount', {
-                                                      required: true,
+                                                      required: 'Поле обязательно к заполнению',
                                                   })}
 
                                                   placeholder={'Write a review'}
